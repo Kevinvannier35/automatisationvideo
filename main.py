@@ -11,25 +11,22 @@ def process_video():
 
     video.save(input_path)
 
-   result = subprocess.run([
-    'ffmpeg', '-y', '-loglevel', 'debug', '-i', input_path,
-    '-vf', 'eq=saturation=1.5:contrast=1.2',
-    '-c:v', 'libx264',
-    '-pix_fmt', 'yuv420p',
-    '-profile:v', 'main',
-    '-level', '3.1',
-    '-crf', '23',
-    '-preset', 'medium',
-    '-movflags', '+faststart',
-    '-c:a', 'aac',
-    '-b:a', '128k',
-    output_path
-], check=True, capture_output=True, text=True)
-print(result.stdout)
-print(result.stderr)
-
-
-
+    result = subprocess.run([
+        'ffmpeg', '-y', '-loglevel', 'debug', '-i', input_path,
+        '-vf', 'eq=saturation=1.5:contrast=1.2',
+        '-c:v', 'libx264',
+        '-pix_fmt', 'yuv420p',
+        '-profile:v', 'main',
+        '-level', '3.1',
+        '-crf', '23',
+        '-preset', 'medium',
+        '-movflags', '+faststart',
+        '-c:a', 'aac',
+        '-b:a', '128k',
+        output_path
+    ], check=True, capture_output=True, text=True)
+    print(result.stdout)
+    print(result.stderr)
 
     return send_file(output_path, as_attachment=True)
 
